@@ -1,0 +1,55 @@
+
+  <ng-container *ngIf="activeUrl">
+    <div class="col-8 offset-2 mt-3">
+      <h2 class="font-weight-light text-center proxima-bold text-primary">
+        Expenditure Processing
+      </h2>
+      <p class="font-weight-lighter proxima-italic text-center mb-4">Add or Manage expenditures.</p>
+      <hr />
+      <!-- <div *ngIf="loading; else content">
+        <app-busyindicator>Loading Tenders...</app-busyindicator>
+      </div> -->
+      <router-outlet></router-outlet>
+            <!-- <ng-template #content > -->
+
+      <div id="case-picker-wrapper">
+        <mat-form-field>
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
+        </mat-form-field>
+  
+        <mat-table class ="cursor" [dataSource]="expenditureList" matSort>
+          <ng-container matColumnDef="code">
+            <mat-header-cell *matHeaderCellDef> Tender </mat-header-cell>
+            <mat-cell style="color: #3F51B5; font-weight: bold;" *matCellDef="let row"> {{row.code}} </mat-cell>
+          </ng-container>
+        
+          <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="createdDate">
+            <mat-header-cell *matHeaderCellDef> Created Date </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.createdDate}} </mat-cell>
+          </ng-container>
+  
+          <ng-container matColumnDef="actions">
+            <mat-header-cell  *matHeaderCellDef > Actions </mat-header-cell>
+            <mat-cell *matCellDef="let row" (click)="$event.stopPropagation()">
+                 <button mat-button (click)="updateFileDialog(row)">Edit</button>
+                 <button mat-button color="warn" (click)="deleteFileDialog(row.code)"><span class="material-icons">
+                  delete_sweep
+                  </span></button>
+            </mat-cell>
+          </ng-container>
+          <!-- Header and Row Declarations -->
+          <mat-header-row *matHeaderRowDef="['code', 'description', 'createdDate','actions']"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: ['code', 'description','createdDate','actions']" ></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+            <!-- </ng-template> -->
+      <button mat-raised-button color="primary" (click)="openFileDialog()">Create Expenditure</button>
+    </div>
+  </ng-container>

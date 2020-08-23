@@ -1,0 +1,79 @@
+<div class="col-8 offset-2 mt-3">
+  <h2 class="font-weight-light text-center proxima-bold text-primary">
+    Expenditure Graphical View
+  </h2>
+  <hr />
+
+  <div class="container switchClass">
+    <label >
+      <span class ="textLabel">Bar Chart:</span>
+      <kendo-switch
+      [(ngModel)]="checked"
+      [onLabel]="'ON'"
+      [offLabel]="'OFF'"
+      (valueChange)="change($event)"
+    ></kendo-switch>
+    </label>
+  </div>
+<div *ngIf="loading; else content">
+        <app-busyindicator>Loading Graphs...</app-busyindicator>
+      </div>
+      <button mat-raised-button color="primary" (click)="exportSizedChart(chart)">
+        Export as PDF
+      </button>
+           <ng-template #content>
+            <div class="demo" style="height: 150px;">
+              <kendo-card>
+                  <kendo-card-body>
+                    <div class="row">
+                      <div class="col-sm">Tender Amount</div>
+                      <div class="col-sm">: {{tenderAmount | currency:'INR':true}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm">Total Amount</div>
+                      <div class="col-sm">: {{totalAmount | currency:'INR':true}}</div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div *ngIf="isProfit"  class="col-sm">Overall Profit</div>
+                      <div *ngIf="!isProfit"  class="col-sm">Overall Loss</div>
+                      <div *ngIf="isProfit" style="color: green;" class="col-sm">: {{profitAmount | currency:'INR':true}}</div>
+                      <div *ngIf="!isProfit" style="color:red;" class="col-sm">: {{profitAmount | currency:'INR':true}}</div>
+                    </div>
+                    
+                  </kendo-card-body>
+              </kendo-card>
+            </div>
+<kendo-chart #chart *ngIf="checked">
+  <kendo-chart-tooltip [shared]="true">
+    
+  </kendo-chart-tooltip>
+  <kendo-chart-category-axis>
+    <kendo-chart-category-axis-item [categories]="categoriesList">
+    </kendo-chart-category-axis-item>
+  </kendo-chart-category-axis>
+  <kendo-chart-series>
+    <kendo-chart-series-item [data]="dataList">
+    </kendo-chart-series-item>
+    
+  </kendo-chart-series>
+</kendo-chart>
+
+<kendo-chart style="height: 500px;"#chart *ngIf="!checked" title="Expenditures">
+  <kendo-chart-legend position="bottom"></kendo-chart-legend>
+  <kendo-chart-series>
+    <kendo-chart-series-item
+      type="pie"
+      [data]="pieList"
+      field="amount"
+      categoryField="expenditureType"
+      [labels]="{ visible: true, content: labelContent }"
+      [autoFit]="true"
+    >
+    </kendo-chart-series-item>
+  </kendo-chart-series>
+</kendo-chart>
+
+
+</ng-template> 
+</div>

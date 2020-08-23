@@ -1,0 +1,187 @@
+
+  <div class="col-8 offset-2 mt-3">
+    <h2 class="font-weight-light text-center proxima-bold text-primary">
+      Tender overall Report
+    </h2>
+    <hr />
+    <div class="container switchClass">
+      <label >
+        <span class ="textLabel">Split View:</span>
+        <kendo-switch
+        [(ngModel)]="checked"
+        [onLabel]="'ON'"
+        [offLabel]="'OFF'"
+        (valueChange)="change($event)"
+      ></kendo-switch>
+      </label>
+    </div>
+    <div class="container" style="height: 40px;">
+      <div class="row">
+        <div class="col-sm">
+          <button style="margin-bottom: 5px;" mat-raised-button color="primary" (click)="openFileDialog()">Create Item</button>
+        </div>
+        <div class="col-sm" style="text-align: center;">
+          <div class="demo">
+            <kendo-card>
+                <kendo-card-body style="padding: 5px; background-color: #faa507;" >
+                    <div style="font-weight: bold;" class="col-sm">Tender Amount    : {{tenderAmount | currency:'INR':true}}</div>
+                  
+                </kendo-card-body>
+            </kendo-card>
+          </div> 
+           </div>
+        <div class="col-sm">
+          <button style="float: right; margin-bottom: 5px;" mat-raised-button color="primary" (click)="overallReport()">Overall Report</button>
+        </div>
+      </div>
+      
+    </div>
+
+    <div *ngIf="loading; else content">
+      <app-busyindicator>Loading Items...</app-busyindicator>
+      </div>
+      <ng-template #content >
+<div class ="fixeddiv container" *ngIf="checked">
+  <div class="container splitKendo" *ngFor="let item of tenderReportList">
+    <div class="labelExpenditure">
+      <span>{{item.expenditureType}}</span>
+    </div>
+
+  <kendo-grid [data]="item.reports">
+    <ng-template kendoGridToolbarTemplate>
+                <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+                <button type="button" kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+            </ng-template>
+    <kendo-grid-column
+      field="itemName"
+      title="Item Name"
+      [locked]="true"
+       [style]="{'background-color': '#EBEBEB'}"
+        [footerStyle]="{'background-color': '#EBEBEB'}"
+      [width]="350"
+    >
+      <ng-template kendoGridFooterTemplate >Items: {{item.count}}</ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column
+    field="createdDate"
+    title="Created Date"
+    [locked]="false"
+    [width]="220"
+  >
+  </kendo-grid-column>
+
+  <kendo-grid-column
+      field="amount"
+      title="Amount"
+      [locked]="false"
+      [width]="220" 
+      [footerStyle]="{'color': '#3F51B5'}"
+      >
+    <ng-template kendoGridCellTemplate let-dataItem>{{dataItem.amount | currency:'INR':true}}</ng-template>
+    <ng-template kendoGridFooterTemplate >Total: {{item.amount | currency:'INR':true}}</ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column
+      field="action"
+                [locked]="false"
+
+      title="Action"
+      [width]="200"
+    >
+     <ng-template kendoGridCellTemplate let-dataItem>
+      <button style="margin-right: 10px;" mat-raised-button  (click)="updateFileDialog(dataItem)">Edit</button>
+      <button mat-raised-button color="warn" (click)="deleteFileDialog(dataItem.tenderReportId)"><span class="material-icons">
+        delete_sweep
+        </span></button>
+    </ng-template>
+    </kendo-grid-column>
+  <kendo-grid-excel fileName="Tenders.xlsx"></kendo-grid-excel>
+  <kendo-grid-pdf fileName="Tenders.pdf" [allPages]="true" paperSize="A4" [repeatHeaders]="true" [landscape]="true">
+    <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
+    <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
+     <div class="page-template">
+        <div class="header">
+          <div style="float: right">Page {{ pageNum }} of {{ totalPages }}</div>
+        </div>
+      </div>
+    </ng-template>
+</kendo-grid-pdf>
+  </kendo-grid>
+</div>
+</div>
+
+<div class="fixeddiv container" *ngIf="!checked">
+  <kendo-grid [data]="tenderReportList"  scrollable="scrollable" [height]="650">
+    <ng-template kendoGridToolbarTemplate>
+                <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+                <button type="button" kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+            </ng-template>
+    <kendo-grid-column
+      field="itemName"
+      title="Item Name"
+      [locked]="true"
+      [width]="300"
+      [style]="{'background-color': '#EBEBEB'}"
+      [footerStyle]="{'background-color': '#EBEBEB'}"
+    >
+      <ng-template kendoGridFooterTemplate>Items: {{tenderReportList.length}}</ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="expenditureType"
+      title="Expenditure Type"
+       [locked]="false"
+       [width]="200"
+    >
+    </kendo-grid-column>
+
+    <kendo-grid-column
+    field="createdDate"
+    title="Created Date"
+    [locked]="false"
+    [width]="170"
+  >
+  </kendo-grid-column>
+
+      <kendo-grid-column
+      field="amount"
+      title="Amount"
+          [locked]="false"
+          [footerStyle]="{'color': '#3F51B5'}"
+
+      [width]="170"
+    >
+    <ng-template kendoGridCellTemplate let-dataItem>{{dataItem.amount | currency:'INR':true}}</ng-template>
+    <ng-template kendoGridFooterTemplate>Total: {{totalAmount | currency:'INR':true}}</ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="action"
+      title="Action"
+                [locked]="false"
+
+      [width]="200"
+    >
+    <ng-template kendoGridCellTemplate let-dataItem>
+      <button style="margin-right: 10px;" mat-raised-button  (click)="updateFileDialog(dataItem)">Edit</button>
+      <button mat-raised-button color="warn" (click)="deleteFileDialog(dataItem.tenderReportId)"><span class="material-icons">
+        delete_sweep
+        </span></button>
+    </ng-template>
+    </kendo-grid-column>
+  <kendo-grid-excel fileName="Tenders.xlsx"></kendo-grid-excel>
+  <kendo-grid-pdf fileName="Tenders.pdf" [allPages]="true" paperSize="A4" [repeatHeaders]="true" [landscape]="true">
+    <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
+    <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
+     <div class="page-template">
+        <div class="header">
+          <div style="float: right">Page {{ pageNum }} of {{ totalPages }}</div>
+        </div>
+      </div>
+    </ng-template>
+</kendo-grid-pdf>
+  </kendo-grid>
+</div>
+</ng-template>
+
+</div>
+

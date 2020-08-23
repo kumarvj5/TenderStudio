@@ -1,0 +1,11 @@
+<div class="row">
+  <ol class="breadcrumb" style="background-color: #fff; margin-left: 25px;">
+    <li class="breadcrumb-item" *ngFor="let item of breadcrumbList; let i = index"
+      [class.active]="i===breadcrumbList.length-1">
+      <a class="text-primary" [routerLink]="item.path" *ngIf="i!==breadcrumbList.length-1">
+        {{ item.name }}
+      </a>
+      <span *ngIf="i===breadcrumbList.length-1">{{ item.name }}</span>
+    </li>
+  </ol>
+</div>

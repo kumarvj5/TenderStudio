@@ -1,0 +1,31 @@
+<form [formGroup]="form" (ngSubmit)="submit(form)">
+  <h1 mat-dialog-title>{{title}}</h1>
+  <mat-dialog-content>
+    <div>
+      <mat-form-field class="fullwidth" appearance="outline">
+      <mat-label>Tender Description</mat-label>
+      <input matInput formControlName="itemName" placeholder="Item Name">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="fullwidth" appearance="outline">
+        <mat-label>Expenditure Type</mat-label>
+        <mat-select  formControlName="expenditureType">
+          <mat-option *ngFor="let expenditure of expenditureTypeList" [value]="expenditure.code">
+            {{expenditure.description}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="fullwidth" appearance="outline">
+        <mat-label>Item Amount</mat-label>
+        <input matInput type="text" formControlName="amount" mvndrMatCurrencyFormat [allowNegative]="false" [currencyCode]="'INR'" placeholder="Enter Item Amount">
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="primary"type="submit" [disabled]="form.invalid">Save Item</button>
+    <button mat-raised-button color="warn"type="button" mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</form>

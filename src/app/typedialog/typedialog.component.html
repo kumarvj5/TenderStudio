@@ -1,0 +1,28 @@
+<form [formGroup]="form" (ngSubmit)="submit(form)">
+  <h1 mat-dialog-title>{{title}}</h1>
+  <mat-dialog-content>
+    <div>
+
+      <mat-form-field class="fullwidth"appearance="outline">
+        <mat-label>Tender Name</mat-label>
+        <input matInput formControlName="code" placeholder="Enter Tender Name">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="fullwidth" appearance="outline">
+      <mat-label>Tender Description</mat-label>
+        <input matInput formControlName="description" placeholder="Enter Tender Descriptione">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="fullwidth" appearance="outline">
+      <mat-label>Tender Amount</mat-label>
+        <input matInput formControlName="amount" type="text" mvndrMatCurrencyFormat [allowNegative]="false" [currencyCode]="'INR'" placeholder="Enter Tender Amount">
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="primary"type="submit" [disabled]="form.invalid">Save Tender</button>
+    <button mat-raised-button color="warn"type="button" mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,153 @@
+
+<div class="col-8 offset-2 mt-3">
+  <h2 class="font-weight-light text-center proxima-bold text-primary">
+    Profit / Loss Report
+  </h2>
+  <hr />
+  <div class="container">
+    <div class="row">
+      <div class="col-sm"></div>
+      <div class="col-sm">
+        <div class="demo" style="text-align: center;">
+          <kendo-card>
+              <kendo-card-body style="padding: 5px; background-color: #faa507;" >
+                  <div style="font-weight: bold;" class="col-sm">Tender Amount    : {{tenderAmount | currency:'INR':true}}</div>
+              </kendo-card-body>
+          </kendo-card>
+        </div>
+              </div>
+      <div class="col-sm">
+        <button style="float: right; margin-bottom: 5px;"mat-raised-button color="primary" (click)="graphicalReport()">Graphical Report</button>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="loading; else content">
+    <app-busyindicator>Loading Overall...</app-busyindicator>
+    </div>
+    <ng-template #content >
+<kendo-splitter orientation="vertical" style="height: 36vw;">
+
+  <kendo-splitter-pane>
+    <kendo-splitter>
+
+      <kendo-splitter-pane [collapsible]="true" size="50%">
+        <div class="pane-content">
+          <kendo-grid #spliGrid [data]="tendersList" [height]="623">
+            <ng-template kendoGridToolbarTemplate>
+                        <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+                        <button type="button" kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+                    </ng-template>
+            <kendo-grid-column
+              field="description"
+              title="Tender"
+              [locked]="true"
+              [width]="220"
+              [style]="{'background-color': '#EBEBEB'}"
+              [footerStyle]="{'background-color': '#EBEBEB'}"
+
+            >
+                        <ng-template kendoGridFooterTemplate>Tender Amount</ng-template>
+
+            </kendo-grid-column>
+            <kendo-grid-column
+            field="createdDate"
+            title="Created Date"
+            [width]="150"
+            [locked]="false"
+             [style]="{'color': 'green'}"
+
+          >
+          </kendo-grid-column>
+            <kendo-grid-column
+              field="amount"
+              title="Amount"
+              [width]="150"
+              [locked]="false"
+
+                                    [style]="{'color': 'green'}"
+                                    [footerStyle]="{'color': 'green'}"
+              
+            >
+            <ng-template kendoGridCellTemplate let-dataItem>{{dataItem.amount | currency:'INR':true}}</ng-template>
+
+            <ng-template kendoGridFooterTemplate let-row>{{tenderAmount | currency:'INR':true}}</ng-template>
+            </kendo-grid-column>
+            
+          <kendo-grid-excel fileName="Tenders.xlsx"></kendo-grid-excel>
+          <kendo-grid-pdf fileName="Tenders.pdf" [allPages]="true" paperSize="A4" [repeatHeaders]="true" [landscape]="true">
+            <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
+            <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
+             <div class="page-template">
+                <div class="header">
+                  <div style="float: right">Page {{ pageNum }} of {{ totalPages }}</div>
+                </div>
+              </div>
+            </ng-template>
+        </kendo-grid-pdf>
+          </kendo-grid>
+        </div>
+      </kendo-splitter-pane>
+
+      <kendo-splitter-pane>
+        <div class="pane-content">
+          <kendo-grid [data]="tendersOverallList" [height]="623">
+            <ng-template kendoGridToolbarTemplate>
+                        <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+                        <button type="button" kendoGridExcelCommand icon="file-excel">Export to Excel</button>
+                    </ng-template>
+            <kendo-grid-column
+              field="expenditureType"
+              title="Expenditure Type"
+              [locked]="true"
+      [width]="300"
+      [style]="{'background-color': '#EBEBEB'}"
+      [footerStyle]="{'background-color': '#EBEBEB'}"
+            >
+              <ng-template kendoGridFooterTemplate>Items: {{tendersOverallList.length}}</ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column
+              field="amount"
+              title="Amount"
+              [width]="220"
+               [locked]="false"
+
+              [style]="{'color': 'red'}"
+              [footerStyle]="{'color': 'red'}"
+
+            >
+            <ng-template kendoGridCellTemplate let-dataItem >{{dataItem.amount | currency:'INR':true}}</ng-template>
+            <ng-template  kendoGridFooterTemplate >Total: {{totalAmount | currency:'INR':true}}</ng-template>
+            </kendo-grid-column>
+
+          <kendo-grid-excel fileName="Tenders.xlsx"></kendo-grid-excel>
+          <kendo-grid-pdf fileName="Tenders.pdf" [allPages]="true" paperSize="A4" [repeatHeaders]="true" [landscape]="true">
+            <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
+            <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
+             <div class="page-template">
+                <div class="header">
+                  <div style="float: right">Page {{ pageNum }} of {{ totalPages }}</div>
+                </div>
+              </div>
+            </ng-template>
+        </kendo-grid-pdf>
+          </kendo-grid>
+        </div>
+      </kendo-splitter-pane>
+
+    </kendo-splitter>
+  </kendo-splitter-pane>
+
+  <kendo-splitter-pane [resizable]="false" size="63px" style="overflow: hidden;">
+    <div class="pane-content">
+      <div class ="col rightalignClass">
+      <p *ngIf="isProfit" style="color: green; font-size: 25px;">Overall Profit : <span>{{finalAmount | currency:'INR':true}}</span></p>
+      <p *ngIf="!isProfit" style="color: red; font-size: 25px;">Overall Loss : <span>{{finalAmount | currency:'INR':true}}</span></p>
+      
+    </div>
+    </div>
+  </kendo-splitter-pane>
+</kendo-splitter>
+</ng-template>
+</div>
