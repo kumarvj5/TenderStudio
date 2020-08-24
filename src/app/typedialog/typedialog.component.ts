@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { TenderserviceService } from '../services/tenderservice.service';
 import { ToastrService } from 'ngx-toastr';
+import { CurrencyPipe } from '@angular/common';
 
 
 
@@ -22,6 +23,7 @@ export class TypedialogComponent implements OnInit {
     @Optional() @Inject(MAT_DIALOG_DATA) private data : FormGroup,
     private toastr: ToastrService,
     private tenderService: TenderserviceService,
+    private currencyPipe: CurrencyPipe
   ) {
     if (data === null) {
       this.form  = this.formBuilder.group({
@@ -40,5 +42,17 @@ export class TypedialogComponent implements OnInit {
 
   submit(form) {
     this.dialogRef.close({ data: form.value });
+  }
+  transformTotal() {
+    const value = this.form.controls.amount.value;
+    this.form.controls.amount.setValue(
+      this.formatMoney(value.replace(/\,/g, "")), 
+      {emitEvent: false}
+    );
+  }
+
+  formatMoney(value) {
+    const temp = `${value}`.replace(/\,/g, "");
+    return this.currencyPipe.transform(temp).replace("$", "₹");
   }
 }

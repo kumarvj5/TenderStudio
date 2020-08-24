@@ -11,6 +11,7 @@ import { filter } from 'rxjs/operators';
 import { DialogData } from '../models/codetype';
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ConfirmdialogComponent } from '../confirmdialog/confirmdialog.component';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-tenderdashboard',
@@ -34,7 +35,8 @@ export class TenderdashboardComponent implements OnInit, AfterViewInit {
               private cd: ChangeDetectorRef,
               private tenderService: TenderserviceService,
               private toastr: ToastrService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private currencyPipe: CurrencyPipe) { }
 
   ngOnInit() {
    this.getAllTenders();
@@ -85,6 +87,7 @@ export class TenderdashboardComponent implements OnInit, AfterViewInit {
       }).afterClosed().subscribe((result) => {
         if (result) {
           console.log('i am resitl', result);
+          result.data.amount = result.data.amount.replace("₹","");
           this.tenderService.createTender(result.data).subscribe(data => {
             this.toastr.success('Tender Created Successfully');
             this.getAllTenders();
@@ -104,7 +107,7 @@ export class TenderdashboardComponent implements OnInit, AfterViewInit {
     this.form= new FormGroup({
       code: new FormControl({value: row.code, disabled: true}, [Validators.required]),
       description: new FormControl(row.description, [Validators.required]),
-      amount: new FormControl(row.amount, [Validators.required])
+      amount: new FormControl(this.formatMoney(row.amount), [Validators.required])
     });
     let dialogRef = this.dialog.open(TypedialogComponent, {
       width: '25vw',
@@ -116,6 +119,7 @@ export class TenderdashboardComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('i am resitl', result);
+        result.data.amount = result.data.amount.replace("₹","");
         this.tenderService.updateTender(row.code, result.data).subscribe(data => {
           this.toastr.success('Tender Updated Successfully');
           this.getAllTenders();
@@ -143,5 +147,10 @@ export class TenderdashboardComponent implements OnInit, AfterViewInit {
         })
       }
   });
+  }
+
+  formatMoney(value) {
+    const temp = `${value}`.replace(/\,/g, "");
+    return this.currencyPipe.transform(temp).replace("$", "₹");
   }
 }

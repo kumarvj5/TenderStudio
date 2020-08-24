@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DialogData } from '../models/codetype';
 import { ExpendituredialogComponent } from '../expendituredialog/expendituredialog.component';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-expendituretype',
@@ -34,7 +35,8 @@ export class ExpendituretypeComponent implements OnInit {
               private cd: ChangeDetectorRef,
               private tenderService: TenderserviceService,
               private toastr: ToastrService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              ) { }
 
   ngOnInit() {
    this.getExpenditureTypes();
@@ -132,4 +134,5 @@ export class ExpendituretypeComponent implements OnInit {
       }
   });
   }
+  
 }

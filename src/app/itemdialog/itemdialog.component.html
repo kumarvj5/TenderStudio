@@ -20,7 +20,7 @@
     <div>
       <mat-form-field class="fullwidth" appearance="outline">
         <mat-label>Item Amount</mat-label>
-        <input matInput type="text" formControlName="amount" mvndrMatCurrencyFormat [allowNegative]="false" [currencyCode]="'INR'" placeholder="Enter Item Amount">
+        <input matInput type="text" formControlName="amount" (blur)="transformTotal()" placeholder="Enter Item Amount">
       </mat-form-field>
     </div>
   </mat-dialog-content>

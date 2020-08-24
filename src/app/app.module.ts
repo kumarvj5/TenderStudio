@@ -24,7 +24,6 @@ import {MatCardModule} from '@angular/material/card';
 import { LayoutModule } from '@progress/kendo-angular-layout';
 import { ItemdialogComponent } from './itemdialog/itemdialog.component';
 import {MatSelectModule} from '@angular/material/select';
-import {MatCurrencyFormatModule} from 'mat-currency-format';
 import { ExpendituretypeComponent } from './expendituretype/expendituretype.component';
 import { IntlModule } from '@progress/kendo-angular-intl';
 
@@ -38,6 +37,7 @@ import {MatSortModule} from '@angular/material/sort';
 import { ChartsComponent } from './charts/charts.component';
 import { ChartsModule } from '@progress/kendo-angular-charts';
 import { SparklineModule } from '@progress/kendo-angular-charts';
+import { CurrencyPipe } from '@angular/common';
 
 @NgModule({
   declarations: [	
@@ -72,7 +72,6 @@ import { SparklineModule } from '@progress/kendo-angular-charts';
     MatCardModule,
     LayoutModule,
     MatSelectModule,
-    MatCurrencyFormatModule,
     ButtonsModule,
     IntlModule,
     ExcelModule,
@@ -88,7 +87,7 @@ import { SparklineModule } from '@progress/kendo-angular-charts';
     ItemdialogComponent,
     ExpendituredialogComponent
     ],
-  providers: [],
+  providers: [CurrencyPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

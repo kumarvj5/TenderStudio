@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { TenderserviceService } from '../services/tenderservice.service';
 import { ActivatedRoute } from '@angular/router';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-itemdialog',
@@ -24,6 +25,7 @@ expenditureTypeList: Array<any> = [];
     private activatedRoute: ActivatedRoute,
     private tenderService: TenderserviceService,
     @Optional() @Inject(MAT_DIALOG_DATA) private data : FormGroup,
+    private currencyPipe : CurrencyPipe
   ) {
     if (data === null) {
       this.form  = this.formBuilder.group({
@@ -48,5 +50,16 @@ expenditureTypeList: Array<any> = [];
   submit(form) {
     this.dialogRef.close({ data: form.value });
   }
+  transformTotal() {
+    const value = this.form.controls.amount.value;
+    this.form.controls.amount.setValue(
+      this.formatMoney(value.replace(/\,/g, "")), 
+      {emitEvent: false}
+    );
+  }
 
+  formatMoney(value) {
+    const temp = `${value}`.replace(/\,/g, "");
+    return this.currencyPipe.transform(temp).replace("$", "₹");
+  }
 }

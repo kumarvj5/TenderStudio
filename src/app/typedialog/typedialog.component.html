@@ -17,7 +17,7 @@
     <div>
       <mat-form-field class="fullwidth" appearance="outline">
       <mat-label>Tender Amount</mat-label>
-        <input matInput formControlName="amount" type="text" mvndrMatCurrencyFormat [allowNegative]="false" [currencyCode]="'INR'" placeholder="Enter Tender Amount">
+        <input matInput formControlName="amount" type="text" (blur)="transformTotal()" placeholder="Enter Tender Amount">
       </mat-form-field>
     </div>
   </mat-dialog-content>

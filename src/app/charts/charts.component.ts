@@ -23,7 +23,7 @@ export class ChartsComponent implements OnInit {
   loading: boolean = true;
 color:string ='green'
   public checked: boolean = false;
-  @ViewChild('chart',null) private chart: ChartComponent;
+  @ViewChild('chart',null) public chart: ChartComponent;
     constructor(private tenderService: TenderserviceService,private cd:ChangeDetectorRef, private activatedRoute: ActivatedRoute, private intl: IntlService) {
       this.labelContent = this.labelContent.bind(this);
      }
