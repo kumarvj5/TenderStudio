@@ -81,7 +81,7 @@ export class ExpendituretypeComponent implements OnInit {
             this.getExpenditureTypes();
           },
           errors => {
-            this.toastr.error('Creating Expenditure Failed', 'Failed Creation');
+            this.toastr.error(errors.error, 'Failed Creation');
           });
         }
       });
@@ -111,7 +111,7 @@ export class ExpendituretypeComponent implements OnInit {
           this.getExpenditureTypes();
         },
         errors => {
-          this.toastr.error('Updating Expenditure Failed', 'Failed Updating');
+          this.toastr.error(errors.error,'Failed Updating');
         });
       }
     });

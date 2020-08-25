@@ -23,8 +23,8 @@ export class TenderdashboardComponent implements OnInit, AfterViewInit {
   typeDialogRef: MatDialogRef<TypedialogComponent>;
 
   tendersList: MatTableDataSource<any> = new MatTableDataSource([]);
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   activeUrl: boolean = true;
   loading: boolean = true;  
   dialogData: DialogData = new DialogData();
@@ -93,7 +93,7 @@ export class TenderdashboardComponent implements OnInit, AfterViewInit {
             this.getAllTenders();
           },
           errors => {
-            this.toastr.error('Creating Tender Failed', 'Failed Creation');
+            this.toastr.error(errors.error, 'Failed Creation');
           });
         }
       });
@@ -125,7 +125,7 @@ export class TenderdashboardComponent implements OnInit, AfterViewInit {
           this.getAllTenders();
         },
         errors => {
-          this.toastr.error('Updating Tender Failed', 'Failed Updating');
+          this.toastr.error(errors.error, 'Failed Updating');
         });
       }
     });

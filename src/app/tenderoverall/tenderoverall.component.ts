@@ -107,7 +107,7 @@ tenderType: string;
           this.getAllTenderReports();
         },
         errors => {
-          this.toastr.error('Creating Item Failed', 'Failed Creation');
+          this.toastr.error(errors.error, 'Failed Creation');
         });
       }
     });
@@ -139,7 +139,7 @@ updateFileDialog(row){
         this.getAllTenderReports();
       },
       errors => {
-        this.toastr.error('Updating Item Failed', 'Failed Updating');
+        this.toastr.error(errors.error, 'Failed Updating');
       });
     }
   });
