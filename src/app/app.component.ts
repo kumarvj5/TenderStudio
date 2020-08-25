@@ -35,5 +35,7 @@ ngOnInit(): void{
         this.router.navigateByUrl('/expenditures');
         }
     }
-
+    public imageClick(){
+      this.router.navigateByUrl('/');
+    }
 }

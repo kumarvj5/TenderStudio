@@ -11,7 +11,7 @@ kendo-drawer-container {
     border-bottom: inset;
     border-bottom-width: 1px;
     padding: 3px 8px;
-    color: #656565;
+    color: #4a4c50;
 }
 .mail-box {
     font-weight: bold;
@@ -33,3 +33,23 @@ kendo-drawer-container {
     color:#3F51B5 !important;
 
    }
+
+   .header-img {
+    cursor: pointer;
+    height: 50px;
+  }
+  .header-img:hover {
+    transform: scale(1.15);
+  }
+
+  .img-container {
+    position: relative;
+    margin-bottom: 25px;
+
+  }
+  .framework-container {
+    text-align: center;
+    padding-top: 14px;
+    display: flex;
+    justify-content: space-evenly;
+  }

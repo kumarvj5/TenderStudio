@@ -19,6 +19,19 @@
       [autoCollapse]="false"
       (select)="onSelect($event)"
   >
+  <ng-template kendoDrawerHeaderTemplate>
+    <div class="framework-container">
+      <a (click)="imageClick()" class="img-container">
+        <img
+          src="../assets/balance5.png"
+          class="header-img"
+        />
+        <hr style="color:rgb(175,43,45)">
+        
+      </a>
+    </div>
+  </ng-template>
+
   </kendo-drawer>
   <kendo-drawer-content>
     <app-breadcrumb></app-breadcrumb>
