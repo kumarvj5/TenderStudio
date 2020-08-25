@@ -17,20 +17,20 @@
     </div>
     <div class="container" style="height: 40px;">
       <div class="row">
-        <div class="col-sm">
+        <div class="col">
           <button style="margin-bottom: 5px;" mat-raised-button color="primary" (click)="openFileDialog()">Create Item</button>
         </div>
-        <div class="col-sm" style="text-align: center;">
-          <div class="demo">
-            <kendo-card>
+        <div class="col-6" style="text-align: center;">
+          <div class="demo" style="text-align: -webkit-center;">
+            <kendo-card [width]="'500px'">
                 <kendo-card-body style="padding: 5px; background-color: #faa507;" >
-                    <div style="font-weight: bold;" class="col-sm">Tender Amount    : {{tenderAmount | currency:'INR':true}}</div>
+                    <div style="font-weight: bold;" class="col-sm">{{tenderType}} - Amount: {{tenderAmount | currency:'INR':true}}</div>
                   
                 </kendo-card-body>
             </kendo-card>
           </div> 
            </div>
-        <div class="col-sm">
+        <div class="col">
           <button style="float: right; margin-bottom: 5px;" mat-raised-button color="primary" (click)="overallReport()">Overall Report</button>
         </div>
       </div>

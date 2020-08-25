@@ -53,18 +53,18 @@ tenderType: string;
     if (this.activatedRoute.snapshot.params.tendertype) {
       if (this.checked) {
         this.tenderService.getTenderReportsSplitList(this.activatedRoute.snapshot.params.tendertype).subscribe((res: any) => {
-          this.tenderReportList = res;
+          this.tenderReportList = res.reports;
           this.cd.detectChanges();
-          this.tenderAmount = res[0].tenderAmount;
+          this.tenderAmount = res.tenderAmount;
           this.loading = false;
         });
       } else {
         this.tenderService.getTenderReportsList(this.activatedRoute.snapshot.params.tendertype).subscribe((res: any) => {
-          this.tenderReportList = res;
+          this.tenderReportList = res.reports;
           this.cd.detectChanges();
-          this.itemCount = res.length;
+          this.itemCount = res.reports.length;
           this.totalAmount = this.tenderReportList.reduce((sum, current) => sum + current.amount, 0);
-          this.tenderAmount = res[0].tenderAmount;
+          this.tenderAmount = res.tenderAmount;
           this.loading = false;
         });
       }
@@ -101,7 +101,7 @@ updateFileDialog(row){
   dialogConfig.autoFocus = true;
   // dialogConfig.disableClose = true;
   this.form = new FormGroup({
-    itemName: new FormControl({value: row.itemName, disabled: true}, [Validators.required]),
+    itemName: new FormControl(row.itemName, [Validators.required]),
     expenditureType: new FormControl(row.expenditureType, [Validators.required]),
     amount: new FormControl(this.formatMoney(row.amount), [Validators.required])
   });
@@ -115,6 +115,7 @@ updateFileDialog(row){
     if (result) {
       console.log('i am resitl', result);
       result.data.amount = result.data.amount.replace("₹","");
+      result.data.tenderType = this.tenderType;
       this.tenderService.updateTenderReport(row.tenderReportId, result.data).subscribe(data => {
         this.toastr.success('Item Updated Successfully');
         this.getAllTenderReports();

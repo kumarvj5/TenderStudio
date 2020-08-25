@@ -6,17 +6,17 @@
   <hr />
   <div class="container">
     <div class="row">
-      <div class="col-sm"></div>
-      <div class="col-sm">
-        <div class="demo" style="text-align: center;">
-          <kendo-card>
+      <div class="col"></div>
+      <div class="col-6">
+        <div class="demo" style="text-align: -webkit-center;">
+          <kendo-card [width]="'500px'">
               <kendo-card-body style="padding: 5px; background-color: #faa507;" >
-                  <div style="font-weight: bold;" class="col-sm">Tender Amount    : {{tenderAmount | currency:'INR':true}}</div>
+                  <div style="font-weight: bold;" class="col-sm">{{tenderType}} - Amount : {{tenderAmount | currency:'INR':true}}</div>
               </kendo-card-body>
           </kendo-card>
         </div>
               </div>
-      <div class="col-sm">
+      <div class="col">
         <button style="float: right; margin-bottom: 5px;"mat-raised-button color="primary" (click)="graphicalReport()">Graphical Report</button>
       </div>
     </div>
