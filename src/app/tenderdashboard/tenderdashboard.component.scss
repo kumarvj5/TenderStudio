@@ -1,1 +1,21 @@
 
+// .mat-column-amount {
+//   justify-content: flex-end;
+//   display: flex;
+//   }
+
+.mat-column-amount{
+    display:inline-flex !important;
+    justify-content:flex-end!important; // or flex-end
+  
+  }
+  .mat-column-actions{
+    display:inline-flex !important;
+    justify-content:flex-end!important; // or flex-end
+  
+  }
+  
+  .header-align-center{
+    display: flex;
+    justify-content: center!important;
+  }

@@ -24,7 +24,7 @@
           <div class="demo" style="text-align: -webkit-center;">
             <kendo-card [width]="'500px'">
                 <kendo-card-body style="padding: 5px; background-color: #faa507;" >
-                    <div style="font-weight: bold;" class="col-sm">{{tenderType}} - Amount: {{tenderAmount | currency:'INR':true}}</div>
+                    <div style="font-weight: bold;" class="col-sm">{{tenderType}} - Amount: {{tenderAmount | currency:'INR':'symbol'}}</div>
                   
                 </kendo-card-body>
             </kendo-card>
@@ -48,16 +48,14 @@
     </div>
 
   <kendo-grid [data]="item.reports">
-    <ng-template kendoGridToolbarTemplate>
-                <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
-                <button type="button" kendoGridExcelCommand icon="file-excel">Export to Excel</button>
-            </ng-template>
+    
     <kendo-grid-column
       field="itemName"
       title="Item Name"
       [locked]="true"
        [style]="{'background-color': '#EBEBEB'}"
         [footerStyle]="{'background-color': '#EBEBEB'}"
+        [headerStyle]="{'background-color': '#EBEBEB'}"
       [width]="350"
     >
       <ng-template kendoGridFooterTemplate >Items: {{item.count}}</ng-template>
@@ -76,21 +74,25 @@
       title="Amount"
       [locked]="false"
       [width]="220" 
-      [footerStyle]="{'color': '#3F51B5'}"
+      [footerStyle]="{'color': '#3F51B5','text-align': 'right'}"
+      [headerStyle]="{'text-align': 'center'}"
+          [style]="{'text-align': 'right'}"
       >
-    <ng-template kendoGridCellTemplate let-dataItem>{{dataItem.amount | currency:'INR':true}}</ng-template>
-    <ng-template kendoGridFooterTemplate >Total: {{item.amount | currency:'INR':true}}</ng-template>
+    <ng-template kendoGridCellTemplate let-dataItem>{{dataItem.amount | currency:'INR':'symbol'}}</ng-template>
+    <ng-template kendoGridFooterTemplate >Total: {{item.amount | currency:'INR':'symbol'}}</ng-template>
     </kendo-grid-column>
 
     <kendo-grid-column
       field="action"
-                [locked]="false"
-
+      [locked]="false"
+      [headerStyle]="{'text-align': 'center'}"
       title="Action"
       [width]="200"
     >
      <ng-template kendoGridCellTemplate let-dataItem>
-      <button style="margin-right: 10px;" mat-raised-button  (click)="updateFileDialog(dataItem)">Edit</button>
+      <button style="margin-right: 10px;" mat-raised-button  (click)="updateFileDialog(dataItem)"><span class="material-icons">
+        edit
+        </span></button>
       <button mat-raised-button color="warn" (click)="deleteFileDialog(dataItem.tenderReportId)"><span class="material-icons">
         delete_sweep
         </span></button>
@@ -112,7 +114,10 @@
 </div>
 
 <div class="fixeddiv container" *ngIf="!checked">
-  <kendo-grid [data]="tenderReportList"  scrollable="scrollable" [height]="650">
+  <kendo-grid [data]="gridData"  scrollable="scrollable" [height]="650"
+  [group]="state.group"
+  [groupable]="{ showFooter: true }"
+  (dataStateChange)="dataStateChange($event)">
     <ng-template kendoGridToolbarTemplate>
                 <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
                 <button type="button" kendoGridExcelCommand icon="file-excel">Export to Excel</button>
@@ -124,8 +129,15 @@
       [width]="300"
       [style]="{'background-color': '#EBEBEB'}"
       [footerStyle]="{'background-color': '#EBEBEB'}"
+      [headerStyle]="{'background-color': '#EBEBEB'}"
     >
-      <ng-template kendoGridFooterTemplate>Items: {{tenderReportList.length}}</ng-template>
+    <ng-template kendoGridFooterTemplate>Items: {{itemCount}}</ng-template>
+
+      <ng-template kendoGridGroupFooterTemplate let-group="group" let-aggregates>
+        <span title="Group Footer Template for ProductName">
+            Count: {{ aggregates.itemName.count }}
+        </span>
+    </ng-template>
     </kendo-grid-column>
     <kendo-grid-column
       field="expenditureType"
@@ -133,6 +145,7 @@
        [locked]="false"
        [width]="200"
     >
+    
     </kendo-grid-column>
 
     <kendo-grid-column
@@ -147,22 +160,34 @@
       field="amount"
       title="Amount"
           [locked]="false"
-          [footerStyle]="{'color': '#3F51B5'}"
-
+          [footerStyle]="{'color': '#3F51B5','text-align': 'right'}"
+          [headerStyle]="{'text-align': 'center'}"
+          [style]="{'text-align': 'right'}"
       [width]="170"
     >
-    <ng-template kendoGridCellTemplate let-dataItem>{{dataItem.amount | currency:'INR':true}}</ng-template>
-    <ng-template kendoGridFooterTemplate>Total: {{totalAmount | currency:'INR':true}}</ng-template>
+    <ng-template kendoGridCellTemplate let-dataItem>{{dataItem.amount | currency:'INR':'symbol'}}</ng-template>
+    <ng-template kendoGridFooterTemplate>Total: {{totalAmount | currency:'INR':'symbol'}}</ng-template>
+
+  
+  <ng-template kendoGridGroupFooterTemplate let-group="group" let-aggregates>
+      <span title="Group Footer Template for UnitPrice">
+          Sum: {{ aggregates.amount.sum | currency:'INR':'symbol'}}
+      </span>
+  </ng-template>
     </kendo-grid-column>
     <kendo-grid-column
       field="action"
       title="Action"
+                [headerStyle]="{'text-align': 'center'}"
+
                 [locked]="false"
 
       [width]="200"
     >
     <ng-template kendoGridCellTemplate let-dataItem>
-      <button style="margin-right: 10px;" mat-raised-button  (click)="updateFileDialog(dataItem)">Edit</button>
+      <button style="margin-right: 10px;" mat-raised-button  (click)="updateFileDialog(dataItem)"><span class="material-icons">
+        edit
+        </span></button>
       <button mat-raised-button color="warn" (click)="deleteFileDialog(dataItem.tenderReportId)"><span class="material-icons">
         delete_sweep
         </span></button>

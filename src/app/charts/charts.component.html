@@ -18,27 +18,27 @@
 <div *ngIf="loading; else content">
         <app-busyindicator>Loading Graphs...</app-busyindicator>
       </div>
-      <button mat-raised-button color="primary" (click)="exportSizedChart(chart)">
+      <!-- <button mat-raised-button color="primary" (click)="exportSizedChart(chart)">
         Export as PDF
-      </button>
+      </button> -->
            <ng-template #content>
             <div class="demo" style="height: 150px;">
               <kendo-card>
                   <kendo-card-body>
                     <div class="row">
                       <div class="col-sm">Tender Amount</div>
-                      <div class="col-sm">: {{tenderAmount | currency:'INR':true}}</div>
+                      <div class="col-sm" style="text-align:right">: {{tenderAmount | currency:'INR':true}}</div>
                     </div>
                     <div class="row">
                       <div class="col-sm">Total Amount</div>
-                      <div class="col-sm">: {{totalAmount | currency:'INR':true}}</div>
+                      <div class="col-sm" style="text-align:right">: {{totalAmount | currency:'INR':true}}</div>
                     </div>
                     <hr>
                     <div class="row">
                       <div *ngIf="isProfit"  class="col-sm">Overall Profit</div>
                       <div *ngIf="!isProfit"  class="col-sm">Overall Loss</div>
-                      <div *ngIf="isProfit" style="color: green;" class="col-sm">: {{profitAmount | currency:'INR':true}}</div>
-                      <div *ngIf="!isProfit" style="color:red;" class="col-sm">: {{profitAmount | currency:'INR':true}}</div>
+                      <div *ngIf="isProfit" style="color: green;text-align:right" class="col-sm">: {{profitAmount | currency:'INR':true}}</div>
+                      <div *ngIf="!isProfit" style="color:red;text-align:right" class="col-sm">: {{profitAmount | currency:'INR':true}}</div>
                     </div>
                     
                   </kendo-card-body>
@@ -59,7 +59,7 @@
   </kendo-chart-series>
 </kendo-chart>
 
-<kendo-chart style="height: 500px;"#chart *ngIf="!checked" title="Expenditures">
+<kendo-chart style="height: 550px;"#chart *ngIf="!checked" title="Expenditures">
   <kendo-chart-legend position="bottom"></kendo-chart-legend>
   <kendo-chart-series>
     <kendo-chart-series-item

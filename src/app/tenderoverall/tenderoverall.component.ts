@@ -9,6 +9,8 @@ import { ItemdialogComponent } from '../itemdialog/itemdialog.component';
 import { TenderData } from '../models/tenderData';
 import { TenderViewData } from '../models/tenderDataView';
 import { CurrencyPipe } from '@angular/common';
+import { DataStateChangeEvent } from '@progress/kendo-angular-grid';
+import { process, State } from '@progress/kendo-data-query';
 
 @Component({
   selector: 'app-tenderoverall',
@@ -16,6 +18,8 @@ import { CurrencyPipe } from '@angular/common';
   styleUrls: ['./tenderoverall.component.scss']
 })
 export class TenderoverallComponent implements OnInit {
+  public aggregates: any[] = [{ field: 'itemName', aggregate: 'count' }, { field: 'amount', aggregate: 'sum' }];
+
   expenditureType: string;
   loading: boolean = true;
   itemCount: number;
@@ -23,10 +27,17 @@ export class TenderoverallComponent implements OnInit {
   totalAmount: any;
   tenderAmount: any;
   public checked: boolean = false;
-;
+  public state: State = {
+    skip: 0,
+    take: 10,
+    
+};
+
 tenderData: TenderData = new TenderData();
 tenderType: string;
-  tenderReportList : Array<any> = [];
+ public tenderReportList : Array<any> = [];
+  public gridData: any = process(this.tenderReportList, this.state);
+
   constructor(private router: Router,
     private cd: ChangeDetectorRef,
     private tenderService: TenderserviceService,
@@ -36,7 +47,9 @@ tenderType: string;
     private currencyPipe: CurrencyPipe) { }
 
   ngOnInit() {
+
     this.getAllTenderReports();
+
     this.tenderType = this.activatedRoute.snapshot.params.tendertype;
     this.tenderService.breadsCrumbList.next([{
       name: 'Tenders',
@@ -54,9 +67,12 @@ tenderType: string;
       if (this.checked) {
         this.tenderService.getTenderReportsSplitList(this.activatedRoute.snapshot.params.tendertype).subscribe((res: any) => {
           this.tenderReportList = res.reports;
-          this.cd.detectChanges();
           this.tenderAmount = res.tenderAmount;
+          console.log(this.tenderReportList);
+          this.cd.detectChanges();
+
           this.loading = false;
+
         });
       } else {
         this.tenderService.getTenderReportsList(this.activatedRoute.snapshot.params.tendertype).subscribe((res: any) => {
@@ -65,6 +81,8 @@ tenderType: string;
           this.itemCount = res.reports.length;
           this.totalAmount = this.tenderReportList.reduce((sum, current) => sum + current.amount, 0);
           this.tenderAmount = res.tenderAmount;
+          this.gridData = process(this.tenderReportList, this.state);
+
           this.loading = false;
         });
       }
@@ -161,5 +179,15 @@ getTotal(event)
 formatMoney(value) {
   const temp = `${value}`.replace(/\,/g, "");
   return this.currencyPipe.transform(temp).replace("$", "₹");
+}
+
+public dataStateChange(state: DataStateChangeEvent): void {
+  if (state && state.group) {
+    state.group.map(group => group.aggregates = this.aggregates);
+  }
+
+  this.state = state;
+
+  this.gridData = process(this.tenderReportList, this.state);
 }
 }

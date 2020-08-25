@@ -65,13 +65,14 @@
               [width]="150"
               [locked]="false"
 
-                                    [style]="{'color': 'green'}"
-                                    [footerStyle]="{'color': 'green'}"
+                                    [style]="{'color': 'green','text-align': 'right'}"
+                                    [footerStyle]="{'color': 'green','text-align': 'right'}"
+                                    [headerStyle]="{'text-align': 'center'}"
               
             >
             <ng-template kendoGridCellTemplate let-dataItem>{{dataItem.amount | currency:'INR':true}}</ng-template>
 
-            <ng-template kendoGridFooterTemplate let-row>{{tenderAmount | currency:'INR':true}}</ng-template>
+            <ng-template  kendoGridFooterTemplate let-row>{{tenderAmount | currency:'INR':true}}</ng-template>
             </kendo-grid-column>
             
           <kendo-grid-excel fileName="Tenders.xlsx"></kendo-grid-excel>
@@ -113,8 +114,9 @@
               [width]="220"
                [locked]="false"
 
-              [style]="{'color': 'red'}"
-              [footerStyle]="{'color': 'red'}"
+              [style]="{'color': 'red','text-align': 'right'}"
+              [footerStyle]="{'color': 'red','text-align': 'right' }"
+              [headerStyle]="{'text-align': 'center'}"
 
             >
             <ng-template kendoGridCellTemplate let-dataItem >{{dataItem.amount | currency:'INR':true}}</ng-template>

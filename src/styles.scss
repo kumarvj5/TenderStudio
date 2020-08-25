@@ -32,7 +32,7 @@ $TenderStudio-theme: mat-light-theme($TenderStudio-primary, $TenderStudio-accent
 // import the base theme
 @import '~@progress/kendo-theme-material/dist/all.scss';
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto,  "Helvetica Neue", sans-serif; }
 .cursor{
     cursor: pointer;
 }
