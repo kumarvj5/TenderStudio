@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy  } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TenderdashboardComponent } from './tenderdashboard/tenderdashboard.component';
@@ -87,7 +86,7 @@ import { CurrencyPipe } from '@angular/common';
     ItemdialogComponent,
     ExpendituredialogComponent
     ],
-  providers: [CurrencyPipe, {provide : LocationStrategy , useClass: HashLocationStrategy}
+  providers: [CurrencyPipe
   ],
   bootstrap: [AppComponent]
 })
