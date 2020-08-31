@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  tendersUrl : 'http://192.168.1.5:5/api/'
+  tendersUrl : 'https://localhost:44342/api/'
 };
 
 /*

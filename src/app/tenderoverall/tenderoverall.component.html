@@ -1,5 +1,5 @@
 
-  <div class="col-8 offset-2 mt-3">
+  <div class="container">
     <h2 class="font-weight-light text-center proxima-bold text-primary">
       TENDER OVERALL REPORT
         </h2>
@@ -22,7 +22,7 @@
         </div>
         <div class="col-6" style="text-align: center;">
           <div class="demo" style="text-align: -webkit-center;">
-            <kendo-card [width]="'500px'">
+            <kendo-card [width]="'100%'">
                 <kendo-card-body style="padding: 5px; background-color: #f0165b; color: white;" >
                     <div style="font-weight: bold;" class="col-sm">{{tenderType}} - Amount: {{tenderAmount | currency:'INR':'symbol'}}</div>
                   
@@ -56,7 +56,7 @@
        [style]="{'background-color': '#EBEBEB'}"
         [footerStyle]="{'background-color': '#EBEBEB'}"
         [headerStyle]="{'background-color': '#EBEBEB'}"
-      [width]="350"
+      [width]="300"
     >
       <ng-template kendoGridFooterTemplate >Items: {{item.count}}</ng-template>
     </kendo-grid-column>
@@ -65,7 +65,7 @@
     field="createdDate"
     title="Created Date"
     [locked]="false"
-    [width]="220"
+    [width]="210"
   >
   </kendo-grid-column>
 
@@ -73,7 +73,7 @@
       field="amount"
       title="Amount"
       [locked]="false"
-      [width]="220" 
+      [width]="210" 
       [footerStyle]="{'color': '#3F51B5','text-align': 'right'}"
       [headerStyle]="{'text-align': 'center'}"
           [style]="{'text-align': 'right'}"
@@ -126,7 +126,7 @@
       field="itemName"
       title="Item Name"
       [locked]="true"
-      [width]="300"
+      [width]="280"
       [style]="{'background-color': '#EBEBEB'}"
       [footerStyle]="{'background-color': '#EBEBEB'}"
       [headerStyle]="{'background-color': '#EBEBEB'}"
@@ -182,7 +182,7 @@
 
                 [locked]="false"
 
-      [width]="200"
+      [width]="190"
     >
     <ng-template kendoGridCellTemplate let-dataItem>
       <button style="margin-right: 10px;" mat-raised-button  (click)="updateFileDialog(dataItem)"><span class="material-icons">

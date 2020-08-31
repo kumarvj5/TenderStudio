@@ -94,8 +94,8 @@ tenderType: string;
     // dialogConfig.disableClose = true;
 
     this.dialog.open(ItemdialogComponent, {
-      width: '25vw',
-      height:'21vw',
+      width: '35%',
+      height:'75%',
     }).afterClosed().subscribe((result) => {
       if (result) {
         console.log('i am resitl', result);
@@ -124,8 +124,8 @@ updateFileDialog(row){
     amount: new FormControl(this.formatMoney(row.amount), [Validators.required])
   });
   const dialogRef = this.dialog.open(ItemdialogComponent, {
-    width: '25vw',
-    height:'21vw', 
+    width: '35%',
+        height:'75%',
     data: this.form
   });
 

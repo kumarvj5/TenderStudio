@@ -82,8 +82,8 @@ export class TenderdashboardComponent implements OnInit, AfterViewInit {
       // dialogConfig.disableClose = true;
 
       this.dialog.open(TypedialogComponent, {
-        width: '25vw',
-        height:'22vw',
+        width: '35%',
+        height:'75%', 
       }).afterClosed().subscribe((result) => {
         if (result) {
           console.log('i am resitl', result);
@@ -110,8 +110,8 @@ export class TenderdashboardComponent implements OnInit, AfterViewInit {
       amount: new FormControl(this.formatMoney(row.amount), [Validators.required])
     });
     let dialogRef = this.dialog.open(TypedialogComponent, {
-      width: '25vw',
-      height:'22vw', 
+      width: '35%',
+      height:'75%', 
       data: this.form
     });
 

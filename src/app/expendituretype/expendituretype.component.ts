@@ -70,8 +70,8 @@ export class ExpendituretypeComponent implements OnInit {
       // dialogConfig.disableClose = true;
 
       this.dialog.open(ExpendituredialogComponent, {
-        width: '25vw',
-        height:'17vw',
+        width: '35%',
+        height:'60%',
         
       }).afterClosed().subscribe((result) => {
         if (result) {
@@ -97,8 +97,9 @@ export class ExpendituretypeComponent implements OnInit {
       description: new FormControl(row.description, [Validators.required])
     });
     let dialogRef = this.dialog.open(ExpendituredialogComponent, {
-      width: '25vw',
-      height:'17vw', 
+      width: '35%',
+        height:'60%',
+        
       data: this.form
     });
 
